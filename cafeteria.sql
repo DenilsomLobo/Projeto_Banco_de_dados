@@ -1,7 +1,9 @@
+/*Criando o banco de dados*/
 CREATE DATABASE IF NOT EXISTS cafeteria
 DEFAULT CHARACTER SET utf8
 DEFAULT COLLATE utf8_general_ci;
 
+/*Criando as tabelas*/
 CREATE TABLE produto(
     id_produto INT NULL AUTO_INCREMENT,
     produto_nome VARCHAR (50),
@@ -39,6 +41,7 @@ CREATE TABLE atendimento(
     PRIMARY KEY (id_atendimento)
 ) DEFAULT CHARSET = utf8;
 
+/*criando as chaves estrangeiras*/
 ALTER TABLE pedido ADD COLUMN id_produto INT;
 ALTER TABLE pedido ADD COLUMN id_cliente INT;
 
@@ -58,6 +61,7 @@ REFERENCES funcionario(id_funcionario);
 ALTER TABLE atendimento ADD FOREIGN KEY (id_cliente)
 REFERENCES cliente(id_cliente);
 
+/*Inserindo os valores*/
 INSERT INTO produto VALUES
 (DEFAULT, 'Café', 50, 9.60),
 (DEFAULT, 'Sorteve na taça', 25, 25.00),
@@ -100,6 +104,7 @@ INSERT INTO atendimento VALUES
 (DEFAULT, '1985-11-14 14:10:05', 5, 4, 5),
 (DEFAULT, '1984-08-13 12:15:05', 6, 1, 6);
 
+/*Query verificação de relacionamento de 1 para muitos*/
 SELECT
 pedido.pedido_data,
 pedido.pedido_quantidade,
@@ -114,7 +119,7 @@ JOIN atendimento ON pedido.id_pedido = atendimento.id_pedido
 JOIN cliente ON cliente.id_cliente = atendimento.id_cliente
 JOIN funcionario ON funcionario.id_funcionario = atendimento.id_funcionario;
 
-/**/
+/*Query verificação de relacionamento de muitos para muitos*/
 SELECT
 cliente.id_cliente,
 cliente.cliente_nome,
